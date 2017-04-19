@@ -177,6 +177,7 @@ export default {
       var m = date.getMinutes();
       var s = date.getSeconds();
       h += m/60;
+      m += s/60;
       this.ctx.clearRect(0, 0, this.width, this.height);
       
       this.drawCircle();

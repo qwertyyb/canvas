@@ -30,7 +30,7 @@ export default {
   name: 'app',
   data(){
     return {
-      activeComp: 'Stars'
+      activeComp: 'Clock'
     }
   }
 }
@@ -59,15 +59,15 @@ nav {
   height: 50px;
   background: rgba(0, 0, 0, 0.5);
   line-height: 50px;
-  display: flex;
 }
 ul {
   width: 100%;
+  display: flex;
+  justify-content: space-around;
 }
 nav li {
-  float: left;
   list-style: none;
-  width: 10%;
+  flex: 1;
 }
 nav li:hover {
   background: black;
