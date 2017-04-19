@@ -1,7 +1,12 @@
 # vue-de
 
-> A Vue.js project
+> A Vue.js project for canvas exercise
 
+1. clock
+![clock](./docs/clock.png)
+
+2. linear
+![clock](./docs/clock.png)
 ## Build Setup
 
 ``` bash
