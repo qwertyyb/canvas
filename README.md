@@ -3,10 +3,10 @@
 > A Vue.js project for canvas exercise
 
 1. clock
-<img src="./docs/clock.png"alt="clock"width="240"height="240"/>
+ ![clock](./docs/clock.png)
 
 2. linear
-<img src="./docs/linear.png"alt="clock"width="240"height="240"/>
+  ![linear](./docs/linear.png)
 
 ## Build Setup
 
