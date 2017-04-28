@@ -1,45 +1,47 @@
 <template>
-  <div id="block-clock">
-    <canvas id="clock"></canvas>
-  </div>
+    <canvas class="clock"></canvas>
 </template>
 
 <script>
 
 export default {
-  name: 'app',
+  name: 'Clock',
   data(){
     return{
       ctx: '',
       width: '',
       height: '',
       radius: 250,
-      font_size: 25,
-      animate: ''
+      font_size: 40,  //AM、PM字体大小
+      animateFrame: '',
+      status: 'paused'
     }
   },
-  created(){
-    this.radius = window.innerWidth>500?250:window.innerWidth*0.4;
-    this.font_size = window.innerWidth>500?40:20;
-  },
   mounted(){
-    var clock = document.getElementById('clock');
-    clock.width = document.body.clientWidth;
-    clock.height = window.innerHeight;
+    var clock = this.$el
+    clock.width = 525;
+    clock.height = 525;
     this.ctx = clock.getContext("2d");
     this.width = clock.width;
     this.height = clock.height;
+    this.start()
+    this.status = 'running'
   },
   activated(){
-    this.start();
+    if (this.status !== 'running'){
+      this.start();
+    }
   },
   deactivated(){
-    cancelAnimationFrame(this.animate);
+    cancelAnimationFrame(this.animateFrame);
+    this.status = 'paused'
   },
   beforeDestroy(){
-    cancelAnimationFrame(this.animate);
+    cancelAnimationFrame(this.animateFrame);
+    this.status = 'paused'
   },
   methods: {
+    //绘制表盘
     drawCircle: function(){
 
       var ctx = this.ctx;
@@ -119,6 +121,7 @@ export default {
       
     },
 
+    //纸制时针
     drawTimeH: function(h){
       var ctx = this.ctx;
       ctx.lineWidth = 7;
@@ -132,7 +135,7 @@ export default {
 
     },
 
-
+    //绘制分针
     drawTimeM: function(m){
       var ctx = this.ctx;
       ctx.lineWidth = 4;
@@ -145,7 +148,7 @@ export default {
 
     },
 
-
+    //绘制秒针
     drawTimeS: function(s){
       var ctx = this.ctx;
       ctx.lineWidth = 4;
@@ -171,28 +174,30 @@ export default {
     },
 
     start: function() {
-      this.animate = requestAnimationFrame(this.start);
+      this.animateFrame = requestAnimationFrame(this.start)
+      
       var date = new Date();
       var h = date.getHours();
       var m = date.getMinutes();
       var s = date.getSeconds();
       h += m/60;
       m += s/60;
-      this.ctx.clearRect(0, 0, this.width, this.height);
+      var ctx = this.ctx;
+      ctx.clearRect(0, 0, this.width, this.height);
       
       this.drawCircle();
 
-      var ctx = this.ctx;
       ctx.shadowColor = 'grey';
-      ctx.shadowBlur = 30;
-
+      ctx.shadowBlur = 30;  //指针的模糊阴影
       this.drawTimeH(h);
       this.drawTimeM(m);
       this.drawTimeS(s);
+      
 
 
     },
 
+    //绘制AM、PM
     drawAP: function(){
       var ctx = this.ctx;
       var apbg = ctx.createRadialGradient(0.5*this.width+this.font_size*1.25+0.2*this.radius, 0.5*this.height, 0, 0.5*this.width+this.font_size*1.25+0.2*this.radius, 0.5*this.height, this.font_size*1.25);
@@ -211,19 +216,8 @@ export default {
 }
 </script>
 
-<style>
-*{
-  margin: 0;
-  padding: 0;
-}
-body {
-  overflow: hidden;
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style scoped>
+canvas.clock {
+  width: 100%;
 }
 </style>

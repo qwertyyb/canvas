@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <nav>
+    <!--<nav>
       <ul>
         <li :class="{ active: activeComp=='Linear' }" v-on:click="activeComp='Linear'">
           <router-link to="/linear">Linear</router-link>
         </li>
-        <li :class="{ active: activeComp=='Clock' }" v-on:click="activeComp='Clock'">
+        <li :class="{ active: activeComp=='Clock' }" father="hello"v-on:click="activeComp='Clock'">
           <router-link to="/">Clock</router-link>
         </li>
         <li :class="{ active: activeComp=='Stars' }" v-on:click="activeComp='Stars'">
@@ -14,25 +14,31 @@
       </ul>
       
       
-    </nav>
+    </nav>-->
     <div id="content">
-    <keep-alive>
+    <!--<keep-alive>
       <router-view></router-view>
-    </keep-alive>
+    </keep-alive>-->
+      <Clock msgff="hello child"></Clock>
+      <Linear></Linear>
     </div>
 
   </div>
 </template>
 
 <script>
+import Clock from '@/components/Clock'
+import Linear from '@/components/Linear'
 
 export default {
   name: 'app',
   data(){
     return {
+      hello: 123,
       activeComp: 'Clock'
     }
-  }
+  },
+  components: { Clock, Linear }
 }
 </script>
 
@@ -79,5 +85,10 @@ nav a {
 }
 nav .active {
   background: black;
+}
+
+#content {
+  width: 80%;
+  max-width: 400px;
 }
 </style>
