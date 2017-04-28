@@ -1,53 +1,65 @@
 <template>
-	<div id="block-linear">
-		<canvas id="linear">你的浏览器版本过低，建议使用Chrome浏览器！</canvas>
-	</div>
+		<canvas class="linear">你的浏览器版本过低，建议使用Chrome浏览器！</canvas>
 </template>
 
 <script>
 
 export default {
 	name: 'linear',
+	props: {
+		count: {
+			type: Number,
+			default: 50
+		},
+		speed: {
+			type: Number,
+			default: 3
+		}
+	},
 	data(){
 		return {
-			Point: '',
-			points: [],
-			speed: 5,
+			Point: '',	//表示Point对象，会在该Vue实例化的时候初始化
+			points: [],	//存储所有的point集合
 			ctx: '',
-			count: 50,
-			animate: ''
+			animate: '',
+			status: 'paused',
+			width: 1024,
+			height: 768
 		}
 	},
 	created(){
-		this.width = window.innerWidth;
-		this.height = window.innerHeight;
-		this.count = (this.width*this.height)/8000;
-
 		this.initPoint();
 		for(var i=0; i<this.count; i++){
 			this.points.push(new this.Point);
 		}
 	},
 	mounted(){
-		var canvas = document.querySelector("#linear");
+		var canvas = this.$el
 		canvas.width = this.width;
 		canvas.height = this.height;
 		this.ctx = canvas.getContext("2d");
-		
+
+		this.move()
+		this.status = 'running'
 	},
 	activated(){
-	  this.move();
+		if (this.status !== 'running'){
+			this.move();
+			this.running = 'running'
+		}
 	},
 	deactivated(){
 	  cancelAnimationFrame(this.animate);
+		this.running = 'paused'
 	},
 	beforeDestroy(){
 		cancelAnimationFrame(this.animate);
+		this.running = 'paused'
 	},
 	methods: {
 		move(){
 			this.animate = requestAnimationFrame(this.move);
-			this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+			this.ctx.clearRect(0, 0, this.width, this.height);
 			for(var i=0; i<this.points.length; i++){
 				this.points[i].move();
 				this.points[i].draw(this.ctx);
@@ -103,6 +115,8 @@ export default {
 
 </script>
 
-<style>
-	
+<style scoped>
+canvas.linear {
+	width: 100%;
+}
 </style>

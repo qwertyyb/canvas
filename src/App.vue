@@ -19,7 +19,7 @@
     <!--<keep-alive>
       <router-view></router-view>
     </keep-alive>-->
-      <Clock msgff="hello child"></Clock>
+      <Clock></Clock>
       <Linear></Linear>
     </div>
 
@@ -89,6 +89,6 @@ nav .active {
 
 #content {
   width: 80%;
-  max-width: 400px;
+  max-width: 800px;
 }
 </style>

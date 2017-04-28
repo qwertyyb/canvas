@@ -5,7 +5,7 @@
 <script>
 
 export default {
-  name: 'Clock',
+  name: 'clock',
   data(){
     return{
       ctx: '',
