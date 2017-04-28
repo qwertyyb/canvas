@@ -1,26 +1,21 @@
 <template>
   <div id="app">
-    <!--<nav>
+    <div class="background">
+      <Linear :count="linear_count"></Linear>
+    </div>
+    <nav>
       <ul>
-        <li :class="{ active: activeComp=='Linear' }" v-on:click="activeComp='Linear'">
-          <router-link to="/linear">Linear</router-link>
-        </li>
-        <li :class="{ active: activeComp=='Clock' }" father="hello"v-on:click="activeComp='Clock'">
-          <router-link to="/">Clock</router-link>
-        </li>
-        <li :class="{ active: activeComp=='Stars' }" v-on:click="activeComp='Stars'">
-          <router-link to="/Stars">Stars</router-link>
+        <li>
+          <Clock></Clock>
         </li>
       </ul>
+    </nav>
       
       
-    </nav>-->
+    </nav>
     <div id="content">
-    <!--<keep-alive>
-      <router-view></router-view>
-    </keep-alive>-->
-      <Clock></Clock>
-      <Linear></Linear>
+      
+      
     </div>
 
   </div>
@@ -34,9 +29,12 @@ export default {
   name: 'app',
   data(){
     return {
-      hello: 123,
+      linear_count: 123,
       activeComp: 'Clock'
     }
+  },
+  created() {
+    this.linear_count = (window.innerWidth * window.innerHeight) / 7500
   },
   components: { Clock, Linear }
 }
@@ -47,6 +45,9 @@ export default {
   margin: 0;
   padding: 0;
 }
+html, body {
+  height: 100%;
+}
 body {
   overflow: hidden;
 }
@@ -56,27 +57,31 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  position: relative;
+  width: 100%;
+  height: 100%;
+}
+div.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 nav {
   position: absolute;
-  top: 0;
   width: 100%;
-  height: 50px;
-  background: rgba(0, 0, 0, 0.5);
-  line-height: 50px;
+  height: 300px;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 ul {
   width: 100%;
   display: flex;
   justify-content: space-around;
+  margin: auto;
 }
 nav li {
   list-style: none;
+  max-width: 250px;
   flex: 1;
-}
-nav li:hover {
-  background: black;
 }
 nav a {
   display: block;
@@ -87,8 +92,4 @@ nav .active {
   background: black;
 }
 
-#content {
-  width: 80%;
-  max-width: 800px;
-}
 </style>

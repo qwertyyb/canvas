@@ -13,7 +13,7 @@ export default {
 		},
 		speed: {
 			type: Number,
-			default: 3
+			default: 2
 		}
 	},
 	data(){
@@ -35,8 +35,8 @@ export default {
 	},
 	mounted(){
 		var canvas = this.$el
-		canvas.width = this.width;
-		canvas.height = this.height;
+		this.width = canvas.width = window.innerWidth;
+		this.height = canvas.height = window.innerHeight;
 		this.ctx = canvas.getContext("2d");
 
 		this.move()
@@ -98,8 +98,8 @@ export default {
 				var x = point.x - this.x;
 				var y = point.y - this.y;
 				var d = Math.sqrt( x*x + y*y );
-				if( d < 150){
-					var a = 1 - d/150;
+				if( d < 100){
+					var a = 1 - d/100;
 					ctx.beginPath();
 					ctx.moveTo(this.x, this.y);
 					ctx.lineTo(point.x, point.y);
